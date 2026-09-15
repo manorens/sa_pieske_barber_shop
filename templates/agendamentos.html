@@ -1,0 +1,78 @@
+{# agendamentos.html - Listagem em tabela #}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendamentos - {{ barbearia }}</title>
+</head>
+<body>
+
+    <h1>{{ barbearia }}</h1>
+
+    {# Menu de navegacao usando url_for() #}
+    <nav>
+        <a href="{{ url_for('index') }}">Início</a> |
+        <a href="{{ url_for('listar') }}">Agendamentos</a>
+    </nav>
+
+    <hr>
+
+    {# Links de filtro por status #}
+    <p>
+        Filtrar:
+        <a href="{{ url_for('listar') }}">Todos</a> |
+        <a href="{{ url_for('listar_status', status='Agendado') }}">Agendado</a> |
+        <a href="{{ url_for('listar_status', status='Concluído') }}">Concluído</a> |
+        <a href="{{ url_for('listar_status', status='Cancelado') }}">Cancelado</a>
+    </p>
+
+    {# Condicional para mostrar o filtro ativo, se houver #}
+    {% if filtro %}
+        <p>Exibindo apenas: {{ filtro }}</p>
+    {% else %}
+        <p>Exibindo todos os agendamentos</p>
+    {% endif %}
+
+    <p>Total exibido: {{ agendamentos|length }}</p>
+
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>#</th>
+            <th>Cliente</th>
+            <th>Serviço</th>
+            <th>Barbeiro</th>
+            <th>Data</th>
+            <th>Horário</th>
+            <th>Status</th>
+            <th>Detalhe</th>
+        </tr>
+
+        {# Loop pelos agendamentos usando loop.index #}
+        {% for agendamento in agendamentos %}
+            {# Condicional para destacar a linha conforme o status #}
+            {% if agendamento.status == "Concluído" %}
+                <tr bgcolor="#b6f2b6">
+            {% elif agendamento.status == "Cancelado" %}
+                <tr bgcolor="#f2b6b6">
+            {% else %}
+                <tr>
+            {% endif %}
+                <td>{{ loop.index }}</td>
+                <td>{{ agendamento.cliente }}</td>
+                <td>{{ agendamento.servico }}</td>
+                <td>{{ agendamento.barbeiro }}</td>
+                <td>{{ agendamento.data }}</td>
+                <td>{{ agendamento.horario }}</td>
+                <td>{{ agendamento.status }}</td>
+                {# Link para a pagina de detalhe #}
+                <td><a href="{{ url_for('detalhe', id=agendamento.id) }}">Ver</a></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Nenhum agendamento encontrado.</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

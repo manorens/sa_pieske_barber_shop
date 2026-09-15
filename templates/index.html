@@ -1,0 +1,26 @@
+{# index.html - Pagina inicial #}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ barbearia }}</title>
+</head>
+<body>
+
+    <h1>{{ barbearia }}</h1>
+
+    {# Menu de navegacao usando url_for() #}
+    <nav>
+        <a href="{{ url_for('index') }}">Início</a> |
+        <a href="{{ url_for('listar') }}">Agendamentos</a>
+    </nav>
+
+    <hr>
+
+    {# Total de agendamentos usando o filtro length #}
+    <p>Total de agendamentos: {{ agendamentos|length }}</p>
+
+    <p>Bem-vindo ao sistema de agendamentos da {{ barbearia }}.</p>
+
+</body>
+</html>

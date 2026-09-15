@@ -1,0 +1,44 @@
+{# detalhe.html - Dados completos de um agendamento #}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhe - {{ barbearia }}</title>
+</head>
+<body>
+
+    <h1>{{ barbearia }}</h1>
+
+    {# Menu de navegacao usando url_for() #}
+    <nav>
+        <a href="{{ url_for('index') }}">Início</a> |
+        <a href="{{ url_for('listar') }}">Agendamentos</a>
+    </nav>
+
+    <hr>
+
+    {# Condicional para tratar agendamento nao encontrado #}
+    {% if agendamento %}
+        <h2>Agendamento #{{ agendamento.id }}</h2>
+        <ul>
+            <li>Cliente: {{ agendamento.cliente }}</li>
+            <li>Telefone: {{ agendamento.telefone }}</li>
+            <li>Serviço: {{ agendamento.servico }}</li>
+            <li>Preço: R$ {{ agendamento.preco }}</li>
+            <li>Barbeiro: {{ agendamento.barbeiro }}</li>
+            <li>Data: {{ agendamento.data }}</li>
+            <li>Horário: {{ agendamento.horario }}</li>
+            <li>Status: {{ agendamento.status }}</li>
+        </ul>
+
+        {# Linha unica gerada pelo metodo exibir() da classe #}
+        <p>Resumo: {{ agendamento.exibir() }}</p>
+    {% else %}
+        <p>Agendamento não encontrado.</p>
+    {% endif %}
+
+    {# Link para voltar a listagem #}
+    <p><a href="{{ url_for('listar') }}">Voltar para a listagem</a></p>
+
+</body>
+</html>
